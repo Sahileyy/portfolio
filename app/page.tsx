@@ -4,7 +4,27 @@
 import Folder from "@/components/folder-component";
 import AboutMe from "@/components/aboutme";
 import ScrollReveal from "@/components/scroll-reveal";
+import { SocialLinks } from "@/components/ui/social-links";
 import { useEffect, useState, useRef } from "react";
+
+const socials = [
+  {
+    name: "Instagram",
+    image: "https://link-hover-lndev.vercel.app/instagram.png",
+  },
+  {
+    name: "LinkedIn",
+    image: "https://link-hover-lndev.vercel.app/linkedin.png",
+  },
+  {
+    name: "Spotify",
+    image: "https://link-hover-lndev.vercel.app/spotify.png",
+  },
+  {
+    name: "TikTok",
+    image: "https://link-hover-lndev.vercel.app/tiktok.png",
+  },
+]
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -216,6 +236,13 @@ export default function Home() {
                     >
                         sahilkrishnacb@gmail.com
                     </a>
+
+                    <div className="flex justify-center">
+                        <SocialLinks 
+                            socials={socials} 
+                            className={isDark ? "text-white/70" : "text-gray-600"} 
+                        />
+                    </div>
                     
                     <div 
                         className={`flex flex-col items-center justify-center cursor-pointer opacity-50 hover:opacity-100 transition-opacity ${isDark ? "text-gray-400" : "text-gray-600"}`}
