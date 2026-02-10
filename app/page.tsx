@@ -11,18 +11,12 @@ const socials = [
   {
     name: "Instagram",
     image: "https://link-hover-lndev.vercel.app/instagram.png",
+    url: "https://www.instagram.com/sahilkrishna.cb?igsh=MWpsdXR1MGJ2N2VqZw==",
   },
   {
     name: "LinkedIn",
     image: "https://link-hover-lndev.vercel.app/linkedin.png",
-  },
-  {
-    name: "Spotify",
-    image: "https://link-hover-lndev.vercel.app/spotify.png",
-  },
-  {
-    name: "TikTok",
-    image: "https://link-hover-lndev.vercel.app/tiktok.png",
+    url: "https://www.linkedin.com/in/sahil-krishna-cb",
   },
 ]
 
@@ -237,12 +231,6 @@ export default function Home() {
                         sahilkrishnacb@gmail.com
                     </a>
 
-                    <div className="flex justify-center">
-                        <SocialLinks 
-                            socials={socials} 
-                            className={isDark ? "text-white/70" : "text-gray-600"} 
-                        />
-                    </div>
                     
                     <div 
                         className={`flex flex-col items-center justify-center cursor-pointer opacity-50 hover:opacity-100 transition-opacity ${isDark ? "text-gray-400" : "text-gray-600"}`}
@@ -252,6 +240,13 @@ export default function Home() {
                         <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                             <path d="M5 10l7-7m0 0l7 7m-7-7v18" />
                         </svg>
+                    </div>
+
+                    <div className="flex justify-center mt-6">
+                        <SocialLinks 
+                            socials={socials} 
+                            className={isDark ? "text-white/40" : "text-gray-400"} 
+                        />
                     </div>
                 </div>
             </ScrollReveal>
