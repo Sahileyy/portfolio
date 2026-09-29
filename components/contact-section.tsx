@@ -4,17 +4,17 @@ import { Github, Linkedin, Instagram, Mail } from "lucide-react";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="mt-12 pt-2 scroll-mt-24" aria-label="Contact and Inquiry">
+    <section id="contact" className="mt-12 pt-2 scroll-mt-24 text-center sm:text-left" aria-label="Contact and Inquiry">
       <h2 className="text-base font-medium text-[#141413] dark:text-[#EDEDEB]">
         Have an idea worth building?
       </h2>
-      <p className="mt-3 text-base text-[#5E5D59] dark:text-[#A3A29D] leading-relaxed">
+      <p className="mt-3 text-[15px] sm:text-base text-[#5E5D59] dark:text-[#A3A29D] leading-relaxed">
         Have a project in mind, something that needs a better direction, or simply an idea you&#39;d like
         to explore? Tell me a little about it and let&#39;s see what we can make together.
       </p>
 
       {/* Social Media & Contact Buttons */}
-      <div className="mt-5 flex flex-wrap items-center gap-2">
+      <div className="mt-5 flex flex-wrap items-center justify-center sm:justify-start gap-2">
         <a
           href="mailto:sahilkrishnacb@gmail.com"
           className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-[#141413] dark:bg-[#EDEDEB] text-[#FAFAF8] dark:text-[#121211] hover:opacity-90 transition-opacity"

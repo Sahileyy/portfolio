@@ -42,7 +42,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] dark:bg-[#121211] text-[#141413] dark:text-[#EDEDEB] antialiased selection:bg-[#141413] selection:text-[#FAFAF8] dark:selection:bg-[#EDEDEB] dark:selection:text-[#121211] transition-colors duration-200">
-      <div className="isolate mx-auto min-h-screen max-w-[712px] px-4 sm:px-6 pb-24 pt-4 sm:pt-8 md:pt-10">
+      <div className="isolate mx-auto min-h-screen max-w-[712px] px-6 sm:px-6 md:px-8 pb-24 pt-4 sm:pt-8 md:pt-10">
         {/* Ephraim Duncan-styled Navbar with slow initial entrance */}
         <ScrollReveal duration={1.0} delay={0.05} yOffset={10}>
           <Navbar activeSection={activeSection} />
