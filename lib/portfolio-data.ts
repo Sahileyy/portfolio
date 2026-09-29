@@ -29,6 +29,13 @@ export interface SkillCategory {
   items: string[];
 }
 
+export interface HobbyItem {
+  title: string;
+  description: string;
+  instagramUrl?: string;
+  instagramHandle?: string;
+}
+
 export const PORTFOLIO_DATA = {
   personal: {
     name: "Sahil Krishna CB",
@@ -116,9 +123,11 @@ export const PORTFOLIO_DATA = {
     {
       title: "Videography",
       description:
-        "Capturing stories through the lens — visual framing, cinematic composition, lighting, and creative post-production editing.",
+        "Capturing stories through the lens — visual storytelling, cinematic framing, color grading, and creative video editing.",
+      instagramUrl: "https://www.instagram.com/sahilnte.profile/",
+      instagramHandle: "sahilnte.profile",
     },
-  ],
+  ] as HobbyItem[],
 
   education: [
     {
