@@ -34,8 +34,8 @@ export default function ServicesSection() {
   const [showAll, setShowAll] = useState(false);
 
   return (
-    <section id="services" className="mt-12 pt-2 scroll-mt-24 text-center sm:text-left">
-      <div className="flex flex-col sm:flex-row items-center sm:justify-between pb-1">
+    <section id="services" className="mt-12 pt-2 scroll-mt-24">
+      <div className="flex items-center justify-between pb-1">
         <h2 className="text-sm text-[#84837E] dark:text-[#8E8D88] text-balance font-normal">
           Services
         </h2>
@@ -44,7 +44,7 @@ export default function ServicesSection() {
         </span>
       </div>
 
-      <div className="pt-3 sm:pt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 sm:gap-y-7 text-center sm:text-left">
+      <div className="pt-3 sm:pt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 sm:gap-y-7">
         {services.map((service, index) => (
           <div
             key={service.number}
@@ -55,7 +55,7 @@ export default function ServicesSection() {
             <span className="block text-xs font-mono text-[#84837E] dark:text-[#8E8D88] mb-1 transition-colors group-hover:text-[#141413] dark:group-hover:text-[#EDEDEB]">
               {service.number}
             </span>
-            <div className="flex items-center justify-center sm:justify-start gap-1.5 mb-1">
+            <div className="flex items-center gap-1.5 mb-1">
               <h3 className="text-[15px] sm:text-base font-medium text-[#141413] dark:text-[#EDEDEB] tracking-tight group-hover:underline underline-offset-2 transition-colors">
                 {service.title}
               </h3>
@@ -69,7 +69,7 @@ export default function ServicesSection() {
 
       {/* Minimal mobile toggle */}
       {services.length > 3 && (
-        <div className="sm:hidden mt-4 pt-1 flex justify-center">
+        <div className="sm:hidden mt-4 pt-1">
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}

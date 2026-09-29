@@ -39,7 +39,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="mt-12 pt-2 scroll-mt-24 text-center sm:text-left">
+    <section id="faq" className="mt-12 pt-2 scroll-mt-24">
       <div className="pb-2">
         <h2 className="text-sm text-[#84837E] dark:text-[#8E8D88] text-balance font-normal">
           FAQ
@@ -59,7 +59,7 @@ export default function FAQSection() {
                   className="group flex w-full items-center justify-between py-3.5 sm:py-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded"
                 >
                   <span
-                    className={`text-sm sm:text-base font-medium pr-3 sm:pr-4 transition-colors flex-1 text-center sm:text-left ${
+                    className={`text-sm sm:text-base font-medium pr-3 sm:pr-4 transition-colors ${
                       isOpen
                         ? "text-blue-600 dark:text-blue-400"
                         : "text-[#141413] dark:text-[#EDEDEB] group-hover:text-blue-600 dark:group-hover:text-blue-400"
@@ -77,7 +77,7 @@ export default function FAQSection() {
                 </button>
               </h3>
               {isOpen && (
-                <div className="pb-4 text-xs sm:text-sm leading-relaxed text-[#5E5D59] dark:text-[#A3A29D] text-center sm:text-left">
+                <div className="pb-4 text-sm leading-relaxed text-[#5E5D59] dark:text-[#A3A29D]">
                   <p>{faq.answer}</p>
                 </div>
               )}

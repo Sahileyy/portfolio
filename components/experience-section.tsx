@@ -6,10 +6,10 @@ export default function ExperienceSection() {
   const [showAllExperience, setShowAllExperience] = useState(false);
 
   return (
-    <section id="experience" className="mt-12 pt-2 scroll-mt-24 space-y-10 text-center sm:text-left">
+    <section id="experience" className="mt-12 pt-2 scroll-mt-24 space-y-10">
       {/* Experience */}
       <div>
-        <div className="flex flex-col sm:flex-row items-center sm:justify-between pb-1">
+        <div className="flex items-center justify-between pb-1">
           <h2 className="text-sm text-[#84837E] dark:text-[#8E8D88] text-balance font-normal">
             Experience
           </h2>
@@ -26,7 +26,7 @@ export default function ExperienceSection() {
                 index > 0 && !showAllExperience ? "hidden sm:block" : "block"
               }`}
             >
-              <div className="flex flex-col sm:flex-row items-center sm:items-baseline sm:justify-between gap-1 mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
                 <div>
                   <h3 className="text-base font-medium text-[#141413] dark:text-[#EDEDEB]">
                     {item.role}
@@ -40,7 +40,7 @@ export default function ExperienceSection() {
                 </span>
               </div>
 
-              <ul className="mt-3 space-y-1.5 pl-0 sm:pl-3 border-l-0 sm:border-l-2 border-[#EAE8E2] dark:border-[#242321] text-center sm:text-left">
+              <ul className="mt-3 space-y-1.5 pl-3 border-l-2 border-[#EAE8E2] dark:border-[#242321]">
                 {item.highlights.map((highlight, hIndex) => (
                   <li
                     key={hIndex}
@@ -56,7 +56,7 @@ export default function ExperienceSection() {
 
         {/* Minimal mobile toggle */}
         {experience.length > 1 && (
-          <div className="sm:hidden mt-3 pt-1 flex justify-center">
+          <div className="sm:hidden mt-3 pt-1">
             <button
               type="button"
               onClick={() => setShowAllExperience(!showAllExperience)}
@@ -70,7 +70,7 @@ export default function ExperienceSection() {
 
       {/* Education */}
       <div>
-        <div className="flex flex-col sm:flex-row items-center sm:justify-between pb-1">
+        <div className="pb-2">
           <h2 className="text-sm text-[#84837E] dark:text-[#8E8D88] text-balance font-normal">
             Education
           </h2>
@@ -80,7 +80,7 @@ export default function ExperienceSection() {
           {education.map((item, index) => (
             <div
               key={index}
-              className="py-3.5 first:pt-2 flex flex-col sm:flex-row items-center sm:items-baseline sm:justify-between gap-1 text-center sm:text-left"
+              className="py-3.5 first:pt-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1"
             >
               <div>
                 <h3 className="text-base font-medium text-[#141413] dark:text-[#EDEDEB]">
@@ -90,7 +90,7 @@ export default function ExperienceSection() {
                   {item.degree}
                 </p>
                 {item.details && (
-                  <p className="text-xs text-[#84837E] dark:text-[#8E8D88] mt-1 max-w-lg mx-auto sm:mx-0">
+                  <p className="text-xs text-[#84837E] dark:text-[#8E8D88] mt-1 max-w-lg">
                     {item.details}
                   </p>
                 )}

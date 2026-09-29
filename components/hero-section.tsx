@@ -13,9 +13,9 @@ import {
 
 export default function HeroSection() {
   return (
-    <section id="home" className="max-w-2xl text-center sm:text-left">
+    <section id="home" className="max-w-2xl">
       <div className="space-y-3">
-        <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-2 sm:gap-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2.5">
           <h1 className="text-xl sm:text-2xl font-medium tracking-tight text-balance text-[#141413] dark:text-[#EDEDEB]">
             Sahil Krishna CB
           </h1>
@@ -28,7 +28,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-1.5 sm:gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm sm:text-base text-[#84837E] dark:text-[#8E8D88] text-balance">
             Full-Stack Developer &amp; Software Engineer
           </h2>
@@ -39,7 +39,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="mt-6 space-y-4 text-[15px] sm:text-base leading-relaxed text-[#5E5D59] dark:text-[#A3A29D] text-center sm:text-left">
+      <div className="mt-6 space-y-4 text-[15px] sm:text-base leading-relaxed text-[#5E5D59] dark:text-[#A3A29D]">
         <p>
           I design and build{" "}
           <span className="whitespace-nowrap">

@@ -8,8 +8,8 @@ export default function SkillsSection() {
   const [showAll, setShowAll] = useState(false);
 
   return (
-    <section id="skills" className="mt-12 pt-2 scroll-mt-24 text-center sm:text-left">
-      <div className="flex flex-col sm:flex-row items-center sm:justify-between pb-1">
+    <section id="skills" className="mt-12 pt-2 scroll-mt-24">
+      <div className="flex items-center justify-between pb-1">
         <h2 className="text-sm text-[#84837E] dark:text-[#8E8D88] text-balance font-normal">
           Stack
         </h2>
@@ -18,7 +18,7 @@ export default function SkillsSection() {
         </span>
       </div>
 
-      <div className="pt-3 sm:pt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 sm:gap-y-6 text-center sm:text-left">
+      <div className="pt-3 sm:pt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 sm:gap-y-6">
         {skills.map((category, index) => (
           <div
             key={index}
@@ -49,7 +49,7 @@ export default function SkillsSection() {
 
       {/* Minimal mobile toggle */}
       {skills.length > 2 && (
-        <div className="sm:hidden mt-3 pt-1 flex justify-center">
+        <div className="sm:hidden mt-3 pt-1">
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}

@@ -62,8 +62,8 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
       aria-label="Main Navigation"
       className="-mx-2 mb-10 sm:mb-12 mt-4 sm:mt-6 md:mt-10 flex items-center justify-between gap-3 sm:gap-4"
     >
-      <div className="overflow-x-auto no-scrollbar flex-1 flex justify-center sm:justify-start">
-        <div className="flex min-w-max items-center justify-center sm:justify-start pr-2 sm:pr-6">
+      <div className="overflow-x-auto no-scrollbar">
+        <div className="flex min-w-max items-center pr-2 sm:pr-6">
           {navLinks.map((item) => {
             const isActive = activeSection.toLowerCase() === item.label.toLowerCase();
             return (
