@@ -34,6 +34,7 @@ export default async function Icon() {
         >
           <img
             src={base64Image}
+            alt="Sahil Krishna CB"
             width="32"
             height="32"
             style={{

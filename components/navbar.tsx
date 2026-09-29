@@ -1,44 +1,106 @@
 "use client";
 
-import Link from "next/link";
-import { Home, User, Code, Mail } from "lucide-react";
+import { useSyncExternalStore } from "react";
+import { Sun, Moon } from "lucide-react";
 
-export default function Navbar() {
-  const items = [
-    { label: "Home", icon: <Home size={20} />, href: "/" },
-    { label: "About", icon: <User size={20} />, href: "/#about" }, // Placeholder links
-    { label: "Projects", icon: <Code size={20} />, href: "/#projects" },
-    { label: "Contact", icon: <Mail size={20} />, href: "/#contact" },
-  ];
+interface NavbarProps {
+  activeSection?: string;
+}
+
+const navLinks = [
+  { label: "home", href: "#home" },
+  { label: "work", href: "#work" },
+  { label: "services", href: "#services" },
+  { label: "experience", href: "#experience" },
+  { label: "skills", href: "#skills" },
+  { label: "contact", href: "#contact" },
+];
+
+const emptySubscribe = () => () => {};
+
+function useIsMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
+function getThemeSnapshot(): "dark" | "light" {
+  if (typeof window === "undefined") return "dark";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
+function subscribeTheme(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+  return () => observer.disconnect();
+}
+
+export default function Navbar({ activeSection = "home" }: NavbarProps) {
+  const isMounted = useIsMounted();
+  const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => "dark");
+
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
 
   return (
-    <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-1 p-2 bg-black/50 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl transition-all duration-300 hover:bg-black/60 hover:scale-105">
-        {items.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="
-              relative group p-3 rounded-full 
-              text-gray-400 hover:text-white hover:bg-white/10
-              transition-all duration-300 ease-out
-            "
-            aria-label={item.label}
-          >
-            {item.icon}
-            
-            {/* Tooltip */}
-            <span className="
-              absolute -bottom-10 left-1/2 -translate-x-1/2 
-              px-2 py-1 bg-black text-white text-[10px] font-medium uppercase tracking-wider rounded
-              opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0
-              transition-all duration-300 pointer-events-none whitespace-nowrap
-            ">
-              {item.label}
-            </span>
-          </Link>
-        ))}
+    <nav
+      id="nav"
+      aria-label="Main Navigation"
+      className="-mx-2 mb-12 mt-6 md:mt-10 flex items-center justify-between gap-4"
+    >
+      <div className="overflow-x-auto no-scrollbar">
+        <div className="flex min-w-max items-center pr-6">
+          {navLinks.map((item) => {
+            const isActive = activeSection.toLowerCase() === item.label.toLowerCase();
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                aria-current={isActive ? "page" : undefined}
+                data-status={isActive ? "active" : undefined}
+                className={`relative flex items-center px-2 py-1 text-base transition-colors ${
+                  isActive
+                    ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
+                    : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </div>
       </div>
+
+      {/* Theme Toggle Button */}
+      <button
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+        className="shrink-0 p-1.5 rounded-full hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] transition-colors"
+      >
+        {isMounted ? (
+          theme === "dark" ? (
+            <Sun size={15} strokeWidth={1.8} />
+          ) : (
+            <Moon size={15} strokeWidth={1.8} />
+          )
+        ) : (
+          <div className="w-[15px] h-[15px]" />
+        )}
+      </button>
     </nav>
   );
 }
