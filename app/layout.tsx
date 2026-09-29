@@ -53,6 +53,13 @@ export const metadata: Metadata = {
       "Full-stack developer building clean, reliable, and high-performance web applications.",
     creator: "@sahilkrishna",
   },
+  icons: {
+    icon: [
+      { url: "/fav-icon.png", type: "image/png" },
+    ],
+    shortcut: "/fav-icon.png",
+    apple: "/fav-icon.png",
+  },
 };
 
 export default function RootLayout({

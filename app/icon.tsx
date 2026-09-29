@@ -13,7 +13,7 @@ export const contentType = 'image/png'
 export default async function Icon() {
   try {
     // Read the image file from the local filesystem
-    const imagePath = join(process.cwd(), 'app', 'favicon-source.png')
+    const imagePath = join(process.cwd(), 'public', 'fav-icon.png')
     const imageBuffer = await readFile(imagePath)
     
     // Use base64 string for embedding in ImageResponse
