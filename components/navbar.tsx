@@ -60,10 +60,10 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
     <nav
       id="nav"
       aria-label="Main Navigation"
-      className="-mx-2 mb-12 mt-6 md:mt-10 flex items-center justify-between gap-4"
+      className="-mx-2 mb-10 sm:mb-12 mt-4 sm:mt-6 md:mt-10 flex items-center justify-between gap-3 sm:gap-4"
     >
       <div className="overflow-x-auto no-scrollbar">
-        <div className="flex min-w-max items-center pr-6">
+        <div className="flex min-w-max items-center pr-2 sm:pr-6">
           {navLinks.map((item) => {
             const isActive = activeSection.toLowerCase() === item.label.toLowerCase();
             return (
@@ -72,7 +72,7 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
                 data-status={isActive ? "active" : undefined}
-                className={`relative flex items-center px-2 py-1 text-base transition-colors ${
+                className={`relative flex items-center px-1.5 sm:px-2 py-1 text-sm sm:text-base transition-colors ${
                   isActive
                     ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
                     : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"

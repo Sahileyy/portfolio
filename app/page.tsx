@@ -11,6 +11,7 @@ import HobbiesSection from "@/components/hobbies-section";
 import FAQSection from "@/components/faq-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
+import ScrollReveal from "@/components/scroll-reveal";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("home");
@@ -41,23 +42,50 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] dark:bg-[#121211] text-[#141413] dark:text-[#EDEDEB] antialiased selection:bg-[#141413] selection:text-[#FAFAF8] dark:selection:bg-[#EDEDEB] dark:selection:text-[#121211] transition-colors duration-200">
-      <div className="isolate mx-auto min-h-screen max-w-[712px] px-4 sm:px-6 pb-20 pt-6 md:pt-10">
-        {/* Ephraim Duncan-styled Navbar */}
-        <Navbar activeSection={activeSection} />
+      <div className="isolate mx-auto min-h-screen max-w-[712px] px-4 sm:px-6 pb-24 pt-4 sm:pt-8 md:pt-10">
+        {/* Ephraim Duncan-styled Navbar with slow initial entrance */}
+        <ScrollReveal duration={1.0} delay={0.05} yOffset={10}>
+          <Navbar activeSection={activeSection} />
+        </ScrollReveal>
 
-        {/* Main Content Area */}
-        <main className="space-y-12">
-          <HeroSection />
-          <ProjectsSection />
-          <ServicesSection />
-          <ExperienceSection />
-          <SkillsSection />
-          <HobbiesSection />
-          <FAQSection />
-          <ContactSection />
+        {/* Main Content Area with Bidirectional Scroll Reveal and Slow Initial Hero Fade */}
+        <main className="space-y-14 sm:space-y-16">
+          <ScrollReveal slowInitial={true} duration={1.2} delay={0.12} yOffset={22}>
+            <HeroSection />
+          </ScrollReveal>
+
+          <ScrollReveal duration={0.9} delay={0.05} yOffset={22}>
+            <ProjectsSection />
+          </ScrollReveal>
+
+          <ScrollReveal duration={0.9} yOffset={22}>
+            <ServicesSection />
+          </ScrollReveal>
+
+          <ScrollReveal duration={0.9} yOffset={22}>
+            <ExperienceSection />
+          </ScrollReveal>
+
+          <ScrollReveal duration={0.9} yOffset={22}>
+            <SkillsSection />
+          </ScrollReveal>
+
+          <ScrollReveal duration={0.9} yOffset={22}>
+            <HobbiesSection />
+          </ScrollReveal>
+
+          <ScrollReveal duration={0.9} yOffset={22}>
+            <FAQSection />
+          </ScrollReveal>
+
+          <ScrollReveal duration={0.9} yOffset={22}>
+            <ContactSection />
+          </ScrollReveal>
         </main>
 
-        <Footer />
+        <ScrollReveal duration={0.8} yOffset={15} delay={0.05}>
+          <Footer />
+        </ScrollReveal>
       </div>
     </div>
   );

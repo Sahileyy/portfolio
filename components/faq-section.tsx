@@ -56,10 +56,10 @@ export default function FAQSection() {
                   type="button"
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
-                  className="group flex w-full items-center justify-between py-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded"
+                  className="group flex w-full items-center justify-between py-3.5 sm:py-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded"
                 >
                   <span
-                    className={`text-base font-medium pr-4 transition-colors ${
+                    className={`text-sm sm:text-base font-medium pr-3 sm:pr-4 transition-colors ${
                       isOpen
                         ? "text-blue-600 dark:text-blue-400"
                         : "text-[#141413] dark:text-[#EDEDEB] group-hover:text-blue-600 dark:group-hover:text-blue-400"
