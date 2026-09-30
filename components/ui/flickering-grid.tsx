@@ -28,7 +28,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
-  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+  const lastDimensionsRef = useRef({ width: 0, height: 0 });
 
   const memoizedColor = useMemo(() => {
     const toRGBA = (colorStr: string) => {
@@ -58,14 +58,14 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   }, [memoizedColor, maxOpacity]);
 
   const setupCanvas = useCallback(
-    (canvas: HTMLCanvasElement, width: number, height: number) => {
-      const dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      const cols = Math.floor(width / (squareSize + gridGap));
-      const rows = Math.floor(height / (squareSize + gridGap));
+    (canvas: HTMLCanvasElement, w: number, h: number) => {
+      const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      const cols = Math.floor(w / (squareSize + gridGap));
+      const rows = Math.floor(h / (squareSize + gridGap));
 
       const squares = new Float32Array(cols * rows);
       for (let i = 0; i < squares.length; i++) {
@@ -91,14 +91,14 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   const drawGrid = useCallback(
     (
       ctx: CanvasRenderingContext2D,
-      width: number,
-      height: number,
+      w: number,
+      h: number,
       cols: number,
       rows: number,
       squares: Float32Array,
       dpr: number
     ) => {
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, w, h);
 
       const dprStep = (squareSize + gridGap) * dpr;
       const dprSize = squareSize * dpr;
@@ -124,7 +124,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animationFrameId: number;
@@ -133,33 +133,30 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     const updateCanvasSize = () => {
       const newWidth = width || container.clientWidth;
       const newHeight = height || container.clientHeight;
-      setCanvasSize({ width: newWidth, height: newHeight });
+      if (!newWidth || !newHeight) return;
+
+      const prev = lastDimensionsRef.current;
+      // On mobile, scrolling collapses/expands the address bar by ~50-80px.
+      // Avoid resetting canvas buffer if width is unchanged and height changed by < 150px.
+      const widthChanged = Math.abs(newWidth - prev.width) > 2;
+      const heightChanged = Math.abs(newHeight - prev.height) > 150;
+
+      if (prev.width > 0 && !widthChanged && !heightChanged) {
+        return;
+      }
+
+      lastDimensionsRef.current = { width: newWidth, height: newHeight };
       gridParams = setupCanvas(canvas, newWidth, newHeight);
     };
 
     updateCanvasSize();
 
     let lastRenderTime = 0;
-    const FRAME_INTERVAL = 1000 / 26; // ~26 fps = smooth organic flicker, zero main-thread congestion
-    let isRapidScrolling = false;
-    let scrollDebounce: ReturnType<typeof setTimeout> | null = null;
-
-    const handleScroll = () => {
-      isRapidScrolling = true;
-      if (scrollDebounce) clearTimeout(scrollDebounce);
-      scrollDebounce = setTimeout(() => {
-        isRapidScrolling = false;
-      }, 75);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const FRAME_INTERVAL = 1000 / 24; // ~24 fps = organic ambient flicker with zero CPU contention
 
     const animate = (time: number) => {
       if (!isInView) return;
       animationFrameId = requestAnimationFrame(animate);
-
-      // Prioritize 60/120fps scrolling responsiveness
-      if (isRapidScrolling) return;
 
       const elapsed = time - lastRenderTime;
       if (elapsed < FRAME_INTERVAL) return;
@@ -202,24 +199,18 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-      if (scrollDebounce) clearTimeout(scrollDebounce);
     };
   }, [setupCanvas, updateSquares, drawGrid, width, height, isInView]);
 
   return (
     <div
       ref={containerRef}
-      className={cn("h-full w-full will-change-transform transform-gpu", className)}
+      className={cn("h-full w-full pointer-events-none select-none touch-none will-change-transform transform-gpu", className)}
       {...props}
     >
       <canvas
         ref={canvasRef}
-        className="pointer-events-none will-change-transform transform-gpu"
-        style={{
-          width: canvasSize.width,
-          height: canvasSize.height,
-        }}
+        className="pointer-events-none select-none touch-none w-full h-full block will-change-transform transform-gpu"
       />
     </div>
   );
