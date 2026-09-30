@@ -8,21 +8,26 @@ const services = [
   },
   {
     number: "02",
+    title: "Shopify & E-Commerce Development",
+    description: "Custom Shopify storefronts, bespoke Liquid theme architecture, app integrations, and high-converting e-commerce experiences.",
+  },
+  {
+    number: "03",
     title: "App Development (Android & iOS)",
     description: "Cross-platform mobile applications for Android and iOS built with React Native, delivering native performance and fluid UX.",
   },
   {
-    number: "03",
+    number: "04",
     title: "Backend & RESTful APIs",
     description: "Scalable API services, microservices, database schemas, and secure authentication systems.",
   },
   {
-    number: "04",
+    number: "05",
     title: "Database Engineering",
     description: "Robust data modeling, index optimization, and reliable storage with PostgreSQL, MongoDB, and MySQL.",
   },
   {
-    number: "05",
+    number: "06",
     title: "Cloud & DevOps Infrastructure",
     description: "Fast, resilient deployment pipelines across AWS S3/EC2, Cloudflare CDN, Nginx, and modern edge networks.",
   },
@@ -49,7 +54,7 @@ export default function ServicesSection() {
           <div
             key={service.number}
             className={`group block py-1 transition-all duration-200 hover:translate-x-0.5 ${
-              index >= 3 && !showAll ? "hidden sm:block" : "block"
+              index >= 4 && !showAll ? "hidden sm:block" : "block"
             }`}
           >
             <span className="block text-xs font-mono text-[#84837E] dark:text-[#8E8D88] mb-1 transition-colors group-hover:text-[#141413] dark:group-hover:text-[#EDEDEB]">
@@ -68,14 +73,14 @@ export default function ServicesSection() {
       </div>
 
       {/* Minimal mobile toggle */}
-      {services.length > 3 && (
+      {services.length > 4 && (
         <div className="sm:hidden mt-4 pt-1">
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center gap-1.5 text-xs font-mono text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] py-1 px-2.5 rounded-full border border-[#EAE8E2] dark:border-[#242321] bg-[#F3F2EE]/50 dark:bg-[#1B1A19]/50 transition-all active:scale-95"
           >
-            <span>{showAll ? "− Show fewer services" : `+ View ${services.length - 3} more services`}</span>
+            <span>{showAll ? "− Show fewer services" : `+ View ${services.length - 4} more services`}</span>
           </button>
         </div>
       )}

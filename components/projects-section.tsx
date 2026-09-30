@@ -18,10 +18,10 @@ export default function ProjectsSection() {
         </span>
       </div>
 
-      <ul role="list" className="mt-3 flex flex-col gap-3.5">
+      <ul role="list" className="mt-3 flex flex-col gap-3.5" suppressHydrationWarning>
         {projects.map((project, index) => (
           <li
-            key={index}
+            key={project.title}
             className={`transition-all duration-200 ${
               index >= 2 && !showAll ? "hidden sm:block" : "block"
             }`}
@@ -30,6 +30,7 @@ export default function ProjectsSection() {
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
+              suppressHydrationWarning
               className="group flex w-full min-w-0 flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 py-0.5"
             >
               <div className="flex min-w-0 items-center gap-1 shrink-0">

@@ -14,32 +14,32 @@ import {
 export default function HeroSection() {
   return (
     <section id="home" className="max-w-2xl">
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2.5">
-          <h1 className="text-xl sm:text-2xl font-medium tracking-tight text-balance text-[#141413] dark:text-[#EDEDEB]">
-            Sahil Krishna CB
+      <div className="space-y-2.5 sm:space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h1 className="text-lg sm:text-2xl font-medium tracking-tight text-balance text-[#141413] dark:text-[#EDEDEB]">
+            Sahil Krishna
           </h1>
-          <div className="flex items-center gap-1.5 text-xs text-[#84837E] dark:text-[#8E8D88] font-mono">
-            <span className="relative flex h-2 w-2">
+          <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-[#84837E] dark:text-[#8E8D88] font-mono">
+            <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-emerald-500"></span>
             </span>
             <span>available for work</span>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-sm sm:text-base text-[#84837E] dark:text-[#8E8D88] text-balance">
+        <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
+          <h2 className="text-xs sm:text-base text-[#84837E] dark:text-[#8E8D88] text-balance">
             Full-Stack Developer &amp; Software Engineer
           </h2>
-          <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[#84837E] dark:text-[#8E8D88]">
-            <SketchGlobe size={14} className="w-3.5 h-3.5 shrink-0" />
+          <div className="flex items-center gap-1.5 text-[11px] sm:text-sm text-[#84837E] dark:text-[#8E8D88]">
+            <SketchGlobe size={13} className="w-3.5 h-3.5 shrink-0" />
             <span>Kerala, India</span>
           </div>
         </div>
       </div>
 
-      <div className="mt-6 space-y-4 text-[15px] sm:text-base leading-relaxed text-[#5E5D59] dark:text-[#A3A29D]">
+      <div className="mt-5 sm:mt-6 space-y-3.5 sm:space-y-4 text-[13.5px] sm:text-base leading-relaxed text-[#5E5D59] dark:text-[#A3A29D]">
         <p>
           I design and build{" "}
           <span className="whitespace-nowrap">

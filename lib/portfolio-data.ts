@@ -51,6 +51,26 @@ export const PORTFOLIO_DATA = {
 
   projects: [
     {
+      title: "maskanbuilder",
+      tagline: "Dynamic CMS-connected platform for Kerala's leading construction firm.",
+      description:
+        "Modern architectural and construction web application built with Next.js and integrated with a dynamic CMS for real-time project showcasing and portfolio management.",
+      tags: ["Next.js", "Dynamic CMS", "TypeScript", "Tailwind CSS", "Vercel"],
+      href: "https://www.maskanbuilder.com/",
+      githubUrl: "",
+      isExternal: true,
+    },
+    {
+      title: "gulfsouq",
+      tagline: "Full-featured e-commerce storefront powered by Shopify platform.",
+      description:
+        "High-performance e-commerce platform for authentic imported goods and confectionery with custom Shopify Liquid architecture, responsive checkout, and catalog sync.",
+      tags: ["Shopify", "E-Commerce", "Liquid", "Tailwind CSS", "Storefront"],
+      href: "https://www.gulfsouq.in/",
+      githubUrl: "",
+      isExternal: true,
+    },
+    {
       title: "components-ui",
       tagline: "Accessible and customizable UI blocks and components registry for Next.js.",
       description:
@@ -58,26 +78,6 @@ export const PORTFOLIO_DATA = {
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Bun"],
       href: "https://github.com/Sahileyy/components-ui",
       githubUrl: "https://github.com/Sahileyy/components-ui",
-      isExternal: true,
-    },
-    {
-      title: "Xpens-Tracker",
-      tagline: "Full-stack personal expense tracker and budget management platform.",
-      description:
-        "Comprehensive expense tracker featuring secure JWT authentication, dynamic expense categorization, interactive charts, and MongoDB data persistence.",
-      tags: ["Next.js", "React", "TypeScript", "MongoDB", "Tailwind CSS", "Framer Motion"],
-      href: "https://xpens-tracker-sigma.vercel.app",
-      githubUrl: "https://github.com/Sahileyy/Xpens-Tracker",
-      isExternal: true,
-    },
-    {
-      title: "xtreme-fitness",
-      tagline: "Full-stack gym management system for memberships, billing, and scheduling.",
-      description:
-        "Comprehensive gym administration system managing member onboarding, subscription tiers, workout tracking, and PostgreSQL database architecture.",
-      tags: ["Next.js", "React", "TypeScript", "PostgreSQL", "Tailwind CSS", "Jose Auth"],
-      href: "https://github.com/Sahileyy/xtreme-fitness",
-      githubUrl: "https://github.com/Sahileyy/xtreme-fitness",
       isExternal: true,
     },
     {
@@ -146,7 +146,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       title: "Frontend",
-      items: ["React.js", "Next.js (App Router)", "React Native", "Tailwind CSS", "Framer Motion", "Figma"],
+      items: ["React.js", "Next.js (App Router)", "React Native", "Shopify", "Tailwind CSS", "Framer Motion", "Figma"],
     },
     {
       title: "Backend & APIs",

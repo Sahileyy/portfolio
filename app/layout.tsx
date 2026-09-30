@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import CustomCursor from "@/components/custom-cursor";
+import { DraggableRope } from "@/components/ui/gsap-draggable-rope";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -73,6 +74,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} antialiased selection:bg-neutral-500/20`}
       >
         <CustomCursor />
+        <DraggableRope className="fixed -top-5 sm:top-0 right-1 sm:right-6 md:right-8 lg:right-12 xl:right-16 2xl:right-24 z-30 flex scale-[0.32] sm:scale-65 md:scale-85 lg:scale-100 origin-top-right pointer-events-none" />
         {children}
       </body>
     </html>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
 interface ScrollRevealProps {
@@ -20,12 +20,6 @@ export default function ScrollReveal({
   className = "",
   slowInitial = false,
 }: ScrollRevealProps) {
-  const shouldReduceMotion = useReducedMotion();
-
-  if (shouldReduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   const effectiveDuration = slowInitial ? 1.2 : duration;
 
   return (
@@ -42,7 +36,7 @@ export default function ScrollReveal({
         delay,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className={className}
+      className={`transform-gpu will-change-transform ${className}`}
     >
       {children}
     </motion.div>

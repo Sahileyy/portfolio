@@ -21,7 +21,7 @@ export default function ExperienceSection() {
         <div className="divide-y divide-[#EAE8E2] dark:divide-[#242321]">
           {experience.map((item, index) => (
             <div
-              key={index}
+              key={item.company + item.role}
               className={`py-4 first:pt-2 transition-all duration-200 ${
                 index > 0 && !showAllExperience ? "hidden sm:block" : "block"
               }`}

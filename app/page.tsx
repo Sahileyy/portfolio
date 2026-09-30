@@ -12,13 +12,17 @@ import FAQSection from "@/components/faq-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import ScrollReveal from "@/components/scroll-reveal";
+import { FlickeringCatBackground } from "@/components/ui/flickering-cat-background";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("home");
 
   useEffect(() => {
     const sections = ["home", "work", "services", "experience", "skills", "hobbies", "faq", "contact"];
-    const handleScroll = () => {
+    let rafId: number | null = null;
+    let isTicking = false;
+
+    const updateActiveSection = () => {
       const scrollY = window.scrollY;
       const offset = 200;
 
@@ -28,28 +32,41 @@ export default function Home() {
           const top = el.offsetTop - offset;
           const height = el.offsetHeight;
           if (scrollY >= top && scrollY < top + height) {
-            setActiveSection(sectionId);
+            setActiveSection((prev) => (prev !== sectionId ? sectionId : prev));
             break;
           }
         }
       }
+      isTicking = false;
+    };
+
+    const handleScroll = () => {
+      if (!isTicking) {
+        isTicking = true;
+        rafId = requestAnimationFrame(updateActiveSection);
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    updateActiveSection();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] dark:bg-[#121211] text-[#141413] dark:text-[#EDEDEB] antialiased selection:bg-[#141413] selection:text-[#FAFAF8] dark:selection:bg-[#EDEDEB] dark:selection:text-[#121211] transition-colors duration-200">
-      <div className="isolate mx-auto min-h-screen max-w-[712px] px-6 sm:px-6 md:px-8 pb-24 pt-4 sm:pt-8 md:pt-10">
+    <div className="relative min-h-screen bg-[#FAFAF8] dark:bg-[#121211] text-[#141413] dark:text-[#EDEDEB] antialiased selection:bg-[#141413] selection:text-[#FAFAF8] dark:selection:bg-[#EDEDEB] dark:selection:text-[#121211] transition-colors duration-200">
+      <FlickeringCatBackground />
+      <div className="relative z-10 isolate mx-auto min-h-screen max-w-[712px] px-4 sm:px-6 md:px-8 pb-20 sm:pb-24 pt-3 sm:pt-8 md:pt-10">
         {/* Ephraim Duncan-styled Navbar with slow initial entrance */}
         <ScrollReveal duration={1.0} delay={0.05} yOffset={10}>
           <Navbar activeSection={activeSection} />
         </ScrollReveal>
 
         {/* Main Content Area with Bidirectional Scroll Reveal and Slow Initial Hero Fade */}
-        <main className="space-y-14 sm:space-y-16">
+        <main className="space-y-10 sm:space-y-14 md:space-y-16">
           <ScrollReveal slowInitial={true} duration={1.2} delay={0.12} yOffset={22}>
             <HeroSection />
           </ScrollReveal>

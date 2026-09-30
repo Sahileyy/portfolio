@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { SketchChevron } from "./sketch-icons";
 
 interface FAQItem {
@@ -76,11 +77,21 @@ export default function FAQSection() {
                   </span>
                 </button>
               </h3>
-              {isOpen && (
-                <div className="pb-4 text-sm leading-relaxed text-[#5E5D59] dark:text-[#A3A29D]">
-                  <p>{faq.answer}</p>
-                </div>
-              )}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pb-4 text-sm leading-relaxed text-[#5E5D59] dark:text-[#A3A29D]">
+                      <p>{faq.answer}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           );
         })}
