@@ -5,17 +5,24 @@ import { Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SketchChevron } from "./sketch-icons";
 
-interface NavbarProps {
-  activeSection?: string;
+export interface NavLinkItem {
+  label: string;
+  href: string;
+  id: string;
 }
 
-const navLinks = [
-  { label: "home", href: "#home" },
-  { label: "work", href: "#work" },
-  { label: "services", href: "#services" },
-  { label: "experience", href: "#experience" },
-  { label: "skills", href: "#skills" },
-  { label: "contact", href: "#contact" },
+interface NavbarProps {
+  activeSection?: string;
+  onNavigate?: (id: string, href: string) => void;
+}
+
+export const navLinks: NavLinkItem[] = [
+  { label: "home", href: "/", id: "home" },
+  { label: "work", href: "/work", id: "work" },
+  { label: "services", href: "/services", id: "services" },
+  { label: "experience", href: "/experience", id: "experience" },
+  { label: "skills", href: "/skills", id: "skills" },
+  { label: "contact", href: "/contact", id: "contact" },
 ];
 
 const primaryNavLinks = navLinks.slice(0, 3);
@@ -46,13 +53,13 @@ function subscribeTheme(callback: () => void) {
   return () => observer.disconnect();
 }
 
-export default function Navbar({ activeSection = "home" }: NavbarProps) {
+export default function Navbar({ activeSection = "home", onNavigate }: NavbarProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isMounted = useIsMounted();
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => "dark");
 
   const isSecondaryActive = secondaryNavLinks.some(
-    (item) => item.label.toLowerCase() === activeSection.toLowerCase()
+    (item) => item.id.toLowerCase() === activeSection.toLowerCase()
   );
 
   const toggleTheme = () => {
@@ -66,6 +73,32 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
     }
   };
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    item: NavLinkItem
+  ) => {
+    e.preventDefault();
+    setIsExpanded(false);
+
+    if (onNavigate) {
+      onNavigate(item.id, item.href);
+    } else {
+      if (typeof window !== "undefined") {
+        if (window.location.pathname !== item.href) {
+          window.history.pushState(null, "", item.href);
+        }
+        if (item.id === "home") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          const el = document.getElementById(item.id);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      }
+    }
+  };
+
   return (
     <nav
       id="nav"
@@ -76,14 +109,15 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
         {/* Desktop Navigation: all links displayed inline */}
         <div className="hidden sm:flex min-w-max items-center pr-2 sm:pr-6">
           {navLinks.map((item) => {
-            const isActive = activeSection.toLowerCase() === item.label.toLowerCase();
+            const isActive = activeSection.toLowerCase() === item.id.toLowerCase();
             return (
               <a
                 key={item.label}
                 href={item.href}
+                onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive ? "page" : undefined}
                 data-status={isActive ? "active" : undefined}
-                className={`relative flex items-center px-1.5 sm:px-2 py-1 text-sm sm:text-base transition-colors ${
+                className={`relative flex items-center px-1.5 sm:px-2 py-1 text-sm sm:text-base transition-colors cursor-pointer ${
                   isActive
                     ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
                     : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
@@ -98,15 +132,15 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
         {/* Mobile Navigation: primary links + minimal view more arrow toggle */}
         <div className="flex sm:hidden items-center">
           {primaryNavLinks.map((item) => {
-            const isActive = activeSection.toLowerCase() === item.label.toLowerCase();
+            const isActive = activeSection.toLowerCase() === item.id.toLowerCase();
             return (
               <a
                 key={item.label}
                 href={item.href}
-                onClick={() => setIsExpanded(false)}
+                onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive ? "page" : undefined}
                 data-status={isActive ? "active" : undefined}
-                className={`relative flex items-center px-1.5 py-1 text-sm transition-colors ${
+                className={`relative flex items-center px-1.5 py-1 text-sm transition-colors cursor-pointer ${
                   isActive
                     ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
                     : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
@@ -122,7 +156,7 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
             onClick={() => setIsExpanded(!isExpanded)}
             aria-expanded={isExpanded}
             aria-label={isExpanded ? "Collapse navigation links" : "View more navigation links"}
-            className={`relative flex items-center gap-0.5 px-1.5 py-1 text-sm transition-colors rounded ${
+            className={`relative flex items-center gap-0.5 px-1.5 py-1 text-sm transition-colors rounded cursor-pointer ${
               isSecondaryActive
                 ? "text-[#141413] dark:text-[#EDEDEB] font-medium"
                 : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
@@ -146,7 +180,7 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
         <button
           onClick={toggleTheme}
           aria-label="Toggle theme"
-          className="shrink-0 p-1.5 rounded-full hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] transition-colors"
+          className="shrink-0 p-1.5 rounded-full hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] transition-colors cursor-pointer"
         >
           {isMounted ? (
             theme === "dark" ? (
@@ -170,17 +204,17 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden sm:hidden w-full"
           >
-            <div className="flex items-center gap-1 pt-1.5 pb-0.5 border-t border-[#EAE8E2]/60 dark:border-[#242321]/60 mt-1.5">
+            <div className="flex items-center gap-1.5 pt-1.5 pb-0.5 border-t border-[#EAE8E2]/60 dark:border-[#242321]/60 mt-1.5">
               {secondaryNavLinks.map((item) => {
-                const isActive = activeSection.toLowerCase() === item.label.toLowerCase();
+                const isActive = activeSection.toLowerCase() === item.id.toLowerCase();
                 return (
                   <a
                     key={item.label}
                     href={item.href}
-                    onClick={() => setIsExpanded(false)}
+                    onClick={(e) => handleNavClick(e, item)}
                     aria-current={isActive ? "page" : undefined}
                     data-status={isActive ? "active" : undefined}
-                    className={`relative flex items-center px-1.5 py-1 text-sm transition-colors ${
+                    className={`relative flex items-center px-1.5 py-1 text-sm transition-colors cursor-pointer touch-manipulation ${
                       isActive
                         ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
                         : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
