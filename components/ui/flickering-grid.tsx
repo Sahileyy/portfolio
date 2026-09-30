@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 export interface FlickeringGridProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,8 +27,6 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isInView, setIsInView] = useState(false);
-  const lastDimensionsRef = useRef({ width: 0, height: 0 });
 
   const memoizedColor = useMemo(() => {
     const toRGBA = (colorStr: string) => {
@@ -62,8 +60,8 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
-      canvas.style.width = "100%";
-      canvas.style.height = "100%";
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
       const cols = Math.floor(w / (squareSize + gridGap));
       const rows = Math.floor(h / (squareSize + gridGap));
 
@@ -128,34 +126,36 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     if (!ctx) return;
 
     let animationFrameId: number;
-    let gridParams: ReturnType<typeof setupCanvas>;
+    let gridParams: ReturnType<typeof setupCanvas> | null = null;
+    let lastW = 0;
+    let lastH = 0;
 
-    const updateCanvasSize = () => {
+    const updateCanvasSize = (force = false) => {
       const newWidth = width || container.clientWidth;
       const newHeight = height || container.clientHeight;
       if (!newWidth || !newHeight) return;
 
-      const prev = lastDimensionsRef.current;
       // On mobile, scrolling collapses/expands the address bar by ~50-80px.
       // Avoid resetting canvas buffer if width is unchanged and height changed by < 150px.
-      const widthChanged = Math.abs(newWidth - prev.width) > 2;
-      const heightChanged = Math.abs(newHeight - prev.height) > 150;
+      const widthChanged = Math.abs(newWidth - lastW) > 2;
+      const heightChanged = Math.abs(newHeight - lastH) > 150;
 
-      if (prev.width > 0 && !widthChanged && !heightChanged) {
+      if (!force && lastW > 0 && !widthChanged && !heightChanged && gridParams) {
         return;
       }
 
-      lastDimensionsRef.current = { width: newWidth, height: newHeight };
+      lastW = newWidth;
+      lastH = newHeight;
       gridParams = setupCanvas(canvas, newWidth, newHeight);
     };
 
-    updateCanvasSize();
+    // Force initial setup
+    updateCanvasSize(true);
 
     let lastRenderTime = 0;
     const FRAME_INTERVAL = 1000 / 24; // ~24 fps = organic ambient flicker with zero CPU contention
 
     const animate = (time: number) => {
-      if (!isInView) return;
       animationFrameId = requestAnimationFrame(animate);
 
       const elapsed = time - lastRenderTime;
@@ -178,29 +178,18 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       }
     };
 
+    animationFrameId = requestAnimationFrame(animate);
+
     const resizeObserver = new ResizeObserver(() => {
-      updateCanvasSize();
+      updateCanvasSize(false);
     });
     resizeObserver.observe(container);
-
-    const intersectionObserver = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
-    intersectionObserver.observe(canvas);
-
-    if (isInView) {
-      animationFrameId = requestAnimationFrame(animate);
-    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
-      intersectionObserver.disconnect();
     };
-  }, [setupCanvas, updateSquares, drawGrid, width, height, isInView]);
+  }, [setupCanvas, updateSquares, drawGrid, width, height]);
 
   return (
     <div
@@ -210,7 +199,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     >
       <canvas
         ref={canvasRef}
-        className="pointer-events-none select-none touch-none w-full h-full block will-change-transform transform-gpu"
+        className="pointer-events-none select-none touch-none block will-change-transform transform-gpu"
       />
     </div>
   );
