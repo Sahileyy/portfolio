@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   title: {
-    default: "Sahil Krishna CB — Full-Stack Developer & Software Engineer",
+    default: "Sahil Krishna-Developer & Software Engineer",
     template: "%s | Sahil Krishna CB",
   },
 
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: "en_IN",
 
-    title: "Sahil Krishna CB — Full-Stack Developer & Software Engineer",
+    title: "Sahil Krishna CB-Developer & Software Engineer",
 
     description:
       "Full-Stack Developer and Software Engineer based in Kerala, India. Specializing in Next.js, React, TypeScript, Node.js, Shopify, and modern web applications.",
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: "Sahil Krishna CB — Full-Stack Developer & Software Engineer",
+    title: "Sahil Krishna CB-Developer & Software Engineer",
 
     description:
       "Full-Stack Developer and Software Engineer based in Kerala, India. Specializing in Next.js, React, TypeScript, Node.js, and Shopify.",
@@ -160,7 +160,7 @@ const jsonLd = {
 
       alternateName: ["Sahil Krishna", "Sahileyy"],
 
-      jobTitle: "Full-Stack Developer & Software Engineer",
+      jobTitle: "Developer & Software Engineer",
 
       description:
         "Full-Stack Developer and Software Engineer based in Kerala, India, specializing in Next.js, React, TypeScript, Node.js, Shopify, and modern web applications.",
@@ -205,7 +205,7 @@ const jsonLd = {
 
       url: SITE_URL,
 
-      name: "Sahil Krishna CB — Full-Stack Developer",
+      name: "Sahil Krishna-Developer",
 
       description:
         "Official portfolio of Sahil Krishna CB, Full-Stack Developer and Software Engineer.",
