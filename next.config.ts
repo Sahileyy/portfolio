@@ -5,15 +5,17 @@ const nextConfig: NextConfig = {
     return [
       { source: "/home", destination: "/" },
       { source: "/work", destination: "/" },
+      { source: "/projects", destination: "/" },
       { source: "/services", destination: "/" },
       { source: "/experience", destination: "/" },
       { source: "/skills", destination: "/" },
       { source: "/contact", destination: "/" },
+      { source: "/about", destination: "/" },
       { source: "/hobbies", destination: "/" },
       { source: "/faq", destination: "/" },
+      { source: "/blog", destination: "/" },
     ];
   },
 };
 
 export default nextConfig;
-
