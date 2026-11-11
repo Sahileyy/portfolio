@@ -14,6 +14,7 @@ import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import ScrollReveal from "@/components/scroll-reveal";
 import CVModal from "@/components/cv-modal";
+import FloatingChatbot from "@/components/floating-chatbot";
 import { FlickeringCatBackground } from "@/components/ui/flickering-cat-background";
 
 export default function Home() {
@@ -58,14 +59,14 @@ export default function Home() {
 
       // Keep single page URL strictly clean at '/' without hash or path changes
       if (typeof window !== "undefined") {
-        if (window.location.pathname !== "/" || window.location.hash) {
-          window.history.replaceState(null, "", "/");
+          if (window.location.pathname !== "/" || window.location.hash) {
+            window.history.replaceState(null, "", "/");
+          }
         }
-      }
 
-      scrollToSection(id);
-    },
-    [scrollToSection]
+        scrollToSection(id);
+      },
+      [scrollToSection]
   );
 
   // Clean any initial hash or path and keep URL at '/' without redirection
@@ -77,20 +78,20 @@ export default function Home() {
 
     const knownSections = ["home", "work", "services", "experience", "skills", "contact", "hobbies", "faq"];
 
-    const targetSection = hash || (knownSections.includes(pathname) ? pathname : "");
+      const targetSection = hash || (knownSections.includes(pathname) ? pathname : "");
 
-    // Immediately clean URL to '/' without any hash or subroute
-    if (window.location.pathname !== "/" || window.location.hash) {
-      window.history.replaceState(null, "", "/");
-    }
+      // Immediately clean URL to '/' without any hash or subroute
+      if (window.location.pathname !== "/" || window.location.hash) {
+        window.history.replaceState(null, "", "/");
+      }
 
-    if (targetSection && targetSection !== "home") {
-      const timer = setTimeout(() => {
-        setActiveSection(targetSection);
-        scrollToSection(targetSection);
+        if (targetSection && targetSection !== "home") {
+          const timer = setTimeout(() => {
+            setActiveSection(targetSection);
+            scrollToSection(targetSection);
       }, 50);
-      return () => clearTimeout(timer);
-    }
+  return () => clearTimeout(timer);
+}
   }, [scrollToSection]);
 
 // Scroll observer to update active section indicator without modifying URL on scroll
@@ -204,6 +205,9 @@ return (
 
       {/* CV / Resume Viewer & Download Modal */}
       <CVModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
+
+      {/* Floating AI Robot Assistant (bottom right) */}
+      <FloatingChatbot onOpenCv={() => setIsCvOpen(true)} />
     </div>
   </div>
 );
