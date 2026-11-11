@@ -1,5 +1,6 @@
 "use client";
 
+import { FileText } from "lucide-react";
 import {
   SketchBrands,
   SketchBusinesses,
@@ -11,7 +12,11 @@ import {
   SketchGlobe,
 } from "./sketch-icons";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  onOpenCv?: () => void;
+}
+
+export default function HeroSection({ onOpenCv }: HeroSectionProps) {
   return (
     <section id="home" className="max-w-2xl">
       <div className="space-y-2.5 sm:space-y-3">
@@ -104,42 +109,18 @@ export default function HeroSection() {
         </p>
       </div>
 
-      {/* <div className="mt-6 flex flex-wrap items-center gap-2">
-        <a
-          href="https://www.linkedin.com/in/sahil-krishna-cb"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#EAE8E2] dark:border-[#242321] bg-[#F3F2EE]/60 dark:bg-[#1B1A19]/60 text-[#141413] dark:text-[#EDEDEB] hover:bg-[#EAE8E2] dark:hover:bg-[#242321] hover:border-[#D5D3CC] dark:hover:border-[#383734] transition-all"
-        >
-          <Linkedin size={13} className="shrink-0 text-[#84837E] dark:text-[#8E8D88]" />
-          <span>LinkedIn</span>
-        </a>
-        <a
-          href="https://github.com/Sahileyy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#EAE8E2] dark:border-[#242321] bg-[#F3F2EE]/60 dark:bg-[#1B1A19]/60 text-[#141413] dark:text-[#EDEDEB] hover:bg-[#EAE8E2] dark:hover:bg-[#242321] hover:border-[#D5D3CC] dark:hover:border-[#383734] transition-all"
-        >
-          <Github size={13} className="shrink-0 text-[#84837E] dark:text-[#8E8D88]" />
-          <span>GitHub</span>
-        </a>
-        <a
-          href="https://www.instagram.com/sahilkrishna.cb?igsh=MWpsdXR1MGJ2N2VqZw=="
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#EAE8E2] dark:border-[#242321] bg-[#F3F2EE]/60 dark:bg-[#1B1A19]/60 text-[#141413] dark:text-[#EDEDEB] hover:bg-[#EAE8E2] dark:hover:bg-[#242321] hover:border-[#D5D3CC] dark:hover:border-[#383734] transition-all"
-        >
-          <Instagram size={13} className="shrink-0 text-[#84837E] dark:text-[#8E8D88]" />
-          <span>Instagram</span>
-        </a>
-        <a
-          href="mailto:sahilkrishnacb@gmail.com"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#EAE8E2] dark:border-[#242321] bg-[#F3F2EE]/60 dark:bg-[#1B1A19]/60 text-[#141413] dark:text-[#EDEDEB] hover:bg-[#EAE8E2] dark:hover:bg-[#242321] hover:border-[#D5D3CC] dark:hover:border-[#383734] transition-all"
-        >
-          <Mail size={13} className="shrink-0 text-[#84837E] dark:text-[#8E8D88]" />
-          <span>Email</span>
-        </a>
-      </div> */}
-    </section>
+      {/* CV Call-To-Action (Matching Theme & Design) */}
+          <div className="mt-6 flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={onOpenCv}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium bg-[#141413] dark:bg-[#EDEDEB] text-[#FAFAF8] dark:text-[#121211] hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer shadow-xs"
+            >
+              <FileText size={14} />
+              <span>View CV</span>
+              <span className="text-[10px] sm:text-xs opacity-60 font-mono">PDF</span>
+            </button>
+      </div>
+    </section >
   );
 }

@@ -142,7 +142,7 @@ export const PORTFOLIO_DATA = {
   skills: [
     {
       title: "Languages",
-      items: ["TypeScript", "JavaScript (ES6+)", "C++", "HTML5 & CSS3", "SQL"],
+      items: ["TypeScript", "JavaScript (ES6+)", "HTML5 & CSS3", "SQL"],
     },
     {
       title: "Frontend",

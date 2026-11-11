@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import CustomCursor from "@/components/custom-cursor";
 import { DraggableRope } from "@/components/ui/gsap-draggable-rope";
+import SmoothScroll from "@/components/smooth-scroll";
+import Preloader from "@/components/preloader";
+import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import "./globals.css";
 
 const SITE_URL = "https://sahilkrishna.in";
@@ -56,26 +59,6 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
 
-  keywords: [
-    "Sahil Krishna CB",
-    "Sahil Krishna",
-    "sahilkrishna",
-    "best developer in kerala",
-    "best software developer in kerala",
-    "Full-Stack Developer",
-    "Software Engineer",
-    "Full-Stack Developer Kerala",
-    "Software Engineer India",
-    "Next.js Developer",
-    "React Developer",
-    "TypeScript Developer",
-    "Node.js Developer",
-    "Shopify Developer",
-    "Web Developer Portfolio",
-    "Freelance Web Developer",
-    "Sahileyy",
-  ],
-
   alternates: {
     canonical: "/",
   },
@@ -97,7 +80,7 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: "/fav-icon.svg",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Sahil Krishna CB — Full-Stack Developer & Software Engineer",
@@ -115,7 +98,7 @@ export const metadata: Metadata = {
 
     creator: "@sahilkrishna",
 
-    images: ["/fav-icon.svg"],
+    images: ["/og-image.jpg"],
   },
 
   robots: {
@@ -167,7 +150,7 @@ const jsonLd = {
 
       url: SITE_URL,
 
-      image: `${SITE_URL}/fav-icon.svg`,
+      image: `${SITE_URL}/profile.jpg`,
 
       email: "mailto:sahilkrishnacb@gmail.com",
 
@@ -238,11 +221,38 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} antialiased selection:bg-neutral-500/20`}
       >
-        <CustomCursor />
-        {/* Responsive Astronaut Draggable Rope: larger and touch-friendly on mobile, elegantly positioned */}
-        <DraggableRope className="fixed -top-3 sm:top-0 right-1 sm:right-6 md:right-8 lg:right-12 xl:right-16 2xl:right-24 z-30 flex scale-[0.58] sm:scale-65 md:scale-85 lg:scale-100 origin-top-right pointer-events-none" />
-        {children}
-      </body>
-    </html>
+          <StyledComponentsRegistry>
+            <Preloader />
+
+            <SmoothScroll>
+              <CustomCursor />
+
+            <DraggableRope
+              className="
+                fixed
+                -top-3
+                sm:top-0
+                right-1
+                sm:right-6
+                md:right-8
+                lg:right-12
+                xl:right-16
+                2xl:right-24
+                z-30
+                flex
+                scale-[0.58]
+                sm:scale-65
+                md:scale-85
+                lg:scale-100
+                origin-top-right
+                pointer-events-none
+              "
+            />
+
+            {children}
+        </SmoothScroll>
+      </StyledComponentsRegistry>
+    </body>
+    </html >
   );
 }

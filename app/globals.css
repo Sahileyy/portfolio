@@ -45,7 +45,6 @@
   html {
     background-color: var(--bg);
     color: var(--text-primary);
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
