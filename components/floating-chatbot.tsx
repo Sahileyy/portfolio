@@ -54,7 +54,7 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
   return (
     <aside
       aria-label="AI Assistant"
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 select-none flex flex-col items-end"
+      className="fixed bottom-12 right-4 sm:bottom-16 sm:right-6 md:bottom-20 md:right-8 z-40 select-none flex flex-col items-end"
     >
       {/* Chat Popover Window */}
       <AnimatePresence>
@@ -274,3 +274,4 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
     </aside>
   );
 }
+
