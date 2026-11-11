@@ -56,11 +56,10 @@ export default function Home() {
 
       setActiveSection(id);
 
+      // Keep single page URL strictly clean at '/' without hash or path changes
       if (typeof window !== "undefined") {
-        const targetHash = id === "home" ? "" : `#${id}`;
-        const newUrl = targetHash ? `/${targetHash}` : "/";
-        if (window.location.hash !== targetHash || window.location.pathname !== "/") {
-          window.history.pushState(null, "", newUrl);
+        if (window.location.pathname !== "/" || window.location.hash) {
+          window.history.replaceState(null, "", "/");
         }
       }
 
@@ -69,54 +68,30 @@ export default function Home() {
     [scrollToSection]
   );
 
-  // Auto-scroll on initial load if path or hash is present, fixing path URLs to clean hash
+  // Clean any initial hash or path and keep URL at '/' without redirection
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const hash = window.location.hash.replace(/^#/, "").toLowerCase();
     const pathname = window.location.pathname.replace(/^\//, "").toLowerCase();
 
     const knownSections = ["home", "work", "services", "experience", "skills", "contact", "hobbies", "faq"];
 
-    let targetSection = hash;
-    if (!targetSection && knownSections.includes(pathname)) {
-      targetSection = pathname;
+    const targetSection = hash || (knownSections.includes(pathname) ? pathname : "");
+
+    // Immediately clean URL to '/' without any hash or subroute
+    if (window.location.pathname !== "/" || window.location.hash) {
+      window.history.replaceState(null, "", "/");
     }
 
-    if (targetSection) {
-      const cleanUrl = targetSection === "home" ? "/" : `/#${targetSection}`;
-      window.history.replaceState(null, "", cleanUrl);
-
+    if (targetSection && targetSection !== "home") {
       const timer = setTimeout(() => {
         setActiveSection(targetSection);
         scrollToSection(targetSection);
-    }, 50);
-  return () => clearTimeout(timer);
-}
+      }, 50);
+      return () => clearTimeout(timer);
+    }
   }, [scrollToSection]);
-
-// Handle browser back/forward buttons and hashchange
-useEffect(() => {
-  const handlePopState = () => {
-    const hash = window.location.hash.replace(/^#/, "").toLowerCase();
-    const pathname = window.location.pathname.replace(/^\//, "").toLowerCase();
-    const targetId = hash || (pathname && pathname !== "home" ? pathname : "home");
-    setActiveSection(targetId);
-    scrollToSection(targetId);
-  };
-
-  const handleHashChange = () => {
-    const hash = window.location.hash.replace(/^#/, "").toLowerCase();
-    const targetId = hash || "home";
-    setActiveSection(targetId);
-    scrollToSection(targetId);
-  };
-
-  window.addEventListener("popstate", handlePopState);
-  window.addEventListener("hashchange", handleHashChange);
-  return () => {
-    window.removeEventListener("popstate", handlePopState);
-    window.removeEventListener("hashchange", handleHashChange);
-  };
-}, [scrollToSection]);
 
 // Scroll observer to update active section indicator without modifying URL on scroll
 useEffect(() => {

@@ -18,12 +18,12 @@ interface NavbarProps {
 }
 
 export const navLinks: NavLinkItem[] = [
-  { label: "home", href: "#home", id: "home" },
-  { label: "work", href: "#work", id: "work" },
-  { label: "services", href: "#services", id: "services" },
-  { label: "experience", href: "#experience", id: "experience" },
-  { label: "skills", href: "#skills", id: "skills" },
-  { label: "contact", href: "#contact", id: "contact" },
+  { label: "home", href: "/", id: "home" },
+  { label: "work", href: "/", id: "work" },
+  { label: "services", href: "/", id: "services" },
+  { label: "experience", href: "/", id: "experience" },
+  { label: "skills", href: "/", id: "skills" },
+  { label: "contact", href: "/", id: "contact" },
 ];
 
 const primaryNavLinks = navLinks.slice(0, 3);
@@ -86,9 +86,9 @@ export default function Navbar({ activeSection = "home", onNavigate }: NavbarPro
       onNavigate(item.id, item.href);
     } else {
       if (typeof window !== "undefined") {
-        const targetHash = item.id === "home" ? "" : `#${item.id}`;
-        const newUrl = targetHash ? `/${targetHash}` : "/";
-        window.history.pushState(null, "", newUrl);
+        if (window.location.pathname !== "/" || window.location.hash) {
+          window.history.replaceState(null, "", "/");
+        }
 
         if (lenis) {
           if (item.id === "home") {
@@ -150,11 +150,10 @@ export default function Navbar({ activeSection = "home", onNavigate }: NavbarPro
                 onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive ? "page" : undefined}
                 data-status={isActive ? "active" : undefined}
-                className={`relative flex items-center px-1.5 py-1 text-sm transition-colors cursor-pointer ${
-                  isActive
+                className={`relative flex items-center px-1.5 py-1 text-sm transition-colors cursor-pointer ${isActive
                     ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
                     : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
-                }`}
+                  }`}
               >
                 {item.label}
               </a>
@@ -166,78 +165,78 @@ export default function Navbar({ activeSection = "home", onNavigate }: NavbarPro
             onClick={() => setIsExpanded(!isExpanded)}
             aria-expanded={isExpanded}
             aria-label={isExpanded ? "Collapse navigation links" : "View more navigation links"}
-            className={`relative inline-flex items-center gap-0.5 px-1.5 py-1 text-sm transition-colors rounded cursor-pointer ${
-              isSecondaryActive
+            className={`relative inline-flex items-center gap-0.5 px-1.5 py-1 text-sm transition-colors rounded cursor-pointer ${isSecondaryActive
                 ? "text-[#141413] dark:text-[#EDEDEB] font-medium"
                 : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
             }`}
           >
-            <span>{isExpanded ? "less" : "more"}</span>
-            <span
-              className={`inline-flex items-center justify-center transition-transform duration-200 ${
-                isExpanded ? "rotate-180" : ""
+          <span>{isExpanded ? "less" : "more"}</span>
+          <span
+            className={`inline-flex items-center justify-center transition-transform duration-200 ${isExpanded ? "rotate-180" : ""
               }`}
-            >
-              <SketchChevron size={13} />
-            </span>
-            {isSecondaryActive && !isExpanded && (
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 ml-0.5" />
-            )}
-          </button>
-        </div>
-
-        {/* Theme Toggle Button */}
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-          className="shrink-0 p-1.5 rounded-full hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] transition-colors cursor-pointer"
-        >
-          {isMounted ? (
-            theme === "dark" ? (
-              <Sun size={15} strokeWidth={1.8} />
-            ) : (
-              <Moon size={15} strokeWidth={1.8} />
-            )
-          ) : (
-            <div className="w-[15px] h-[15px]" />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile Collapsible Secondary Links */}
-      <AnimatePresence initial={false}>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden sm:hidden w-full"
           >
-            <div className="flex items-center gap-1.5 pt-1.5 pb-0.5 border-t border-[#EAE8E2]/60 dark:border-[#242321]/60 mt-1.5">
-              {secondaryNavLinks.map((item) => {
-                const isActive = activeSection.toLowerCase() === item.id.toLowerCase();
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={(e) => handleNavClick(e, item)}
-                    aria-current={isActive ? "page" : undefined}
-                    data-status={isActive ? "active" : undefined}
-                    className={`relative flex items-center px-1.5 py-1 text-sm transition-colors cursor-pointer touch-manipulation ${
-                      isActive
-                        ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
-                        : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
+      <SketchChevron size={13} />
+    </span>
+            {
+    isSecondaryActive && !isExpanded && (
+      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 ml-0.5" />
+    )
+  }
+          </button >
+        </div >
+
+  {/* Theme Toggle Button */ }
+  <button
+    onClick={toggleTheme}
+    aria-label="Toggle theme"
+    className="shrink-0 p-1.5 rounded-full hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] transition-colors cursor-pointer"
+  >
+    {isMounted ? (
+      theme === "dark" ? (
+        <Sun size={15} strokeWidth={1.8} />
+      ) : (
+        <Moon size={15} strokeWidth={1.8} />
+      )
+    ) : (
+    < div className="w-[15px] h-[15px]" />
+          )}
+  </button>
+      </div >
+
+    {/* Mobile Collapsible Secondary Links */ }
+    < AnimatePresence initial = { false} >
+      { isExpanded && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          className="overflow-hidden sm:hidden w-full"
+        >
+          <div className="flex items-center gap-1.5 pt-1.5 pb-0.5 border-t border-[#EAE8E2]/60 dark:border-[#242321]/60 mt-1.5">
+            {secondaryNavLinks.map((item) => {
+              const isActive = activeSection.toLowerCase() === item.id.toLowerCase();
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item)}
+                  aria-current={isActive ? "page" : undefined}
+                  data-status={isActive ? "active" : undefined}
+                  className={`relative flex items-center px-1.5 py-1 text-sm transition-colors cursor-pointer touch-manipulation ${isActive
+                      ? "text-[#141413] dark:text-[#EDEDEB] underline underline-offset-4"
+                      : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
                     }`}
-                  >
-                    {item.label}
-                  </a>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+        </motion.div>
+      )
+}
+      </AnimatePresence >
+    </nav >
   );
 }
