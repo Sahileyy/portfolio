@@ -110,16 +110,16 @@ export default function HeroSection({ onOpenCv }: HeroSectionProps) {
       </div>
 
       {/* CV Call-To-Action (Matching Theme & Design) */}
-          <div className="mt-6 flex flex-wrap items-center gap-2.5">
-            <button
-              type="button"
-              onClick={onOpenCv}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium bg-[#141413] dark:bg-[#EDEDEB] text-[#FAFAF8] dark:text-[#121211] hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer shadow-xs"
-            >
-              <FileText size={14} />
-              <span>View CV</span>
-              <span className="text-[10px] sm:text-xs opacity-60 font-mono">PDF</span>
-            </button>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={onOpenCv}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-medium bg-[#141413] dark:bg-[#EDEDEB] text-[#FAFAF8] dark:text-[#121211] hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer shadow-xs"
+        >
+          <FileText size={12} />
+          <span>View CV</span>
+          <span className="text-[9px] sm:text-[10px] opacity-60 font-mono">PDF</span>
+        </button>
       </div>
     </section >
   );

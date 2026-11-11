@@ -61,9 +61,9 @@ export default function ContactSection({ onOpenCv }: ContactSectionProps) {
           type="button"
           onClick={onOpenCv}
           suppressHydrationWarning
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#EAE8E2] dark:border-[#242321] bg-[#F3F2EE]/60 dark:bg-[#1B1A19]/60 text-[#141413] dark:text-[#EDEDEB] hover:bg-[#EAE8E2] dark:hover:bg-[#242321] hover:border-[#D5D3CC] dark:hover:border-[#383734] transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-[#EAE8E2] dark:border-[#242321] bg-[#F3F2EE]/60 dark:bg-[#1B1A19]/60 text-[#141413] dark:text-[#EDEDEB] hover:bg-[#EAE8E2] dark:hover:bg-[#242321] hover:border-[#D5D3CC] dark:hover:border-[#383734] transition-all cursor-pointer"
         >
-          <FileText size={13} className="shrink-0 text-[#84837E] dark:text-[#8E8D88]" />
+          <FileText size={12} className="shrink-0 text-[#84837E] dark:text-[#8E8D88]" />
           <span>View CV</span>
         </button>
       </div>
