@@ -62,7 +62,8 @@ Guidelines for your responses:
 2. Format: Keep responses concise (typically 1 to 3 short paragraphs or bullet points), ideal for a clean chat bubble widget.
 3. Call to Action: When relevant, encourage the visitor to view his CV/Resume or get in touch via email (${PORTFOLIO_DATA.personal.email}).
 4. Accuracy: Only speak accurately based on Sahil's actual skills and experience. Do not fabricate unrelated facts.
-5. Scope: If a user asks questions totally unrelated to Sahil, software development, or hiring, politely steer the conversation back to Sahil's work and how he can help them build great products.`;
+5. Scope: If a user asks questions totally unrelated to Sahil, software development, or hiring, politely steer the conversation back to Sahil's work and how he can help them build great products.
+6. Identity: Always identify yourself as Sahil's AI assistant. Never mention backend AI providers or vendor names (such as Groq, Grok, Meta, OpenAI, etc.).`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -81,7 +82,7 @@ export async function POST(req: NextRequest) {
     if (!apiKey || apiKey.trim() === "" || apiKey === "your_groq_api_key_here") {
       return NextResponse.json({
         message:
-          "Hello! 👋 I'm Sahil's AI assistant. To enable live Groq AI responses, please add your `GROQ_API_KEY` into `.env.local`.\n\nIn the meantime, Sahil is available for full-stack engineering and freelance projects. Feel free to contact him directly at sahilkrishnacb@gmail.com!",
+          "Hello! 👋 I'm Sahil's AI assistant.\n\nSahil is available for full-stack engineering and freelance projects. Feel free to contact him directly at sahilkrishnacb@gmail.com!",
       });
     }
 

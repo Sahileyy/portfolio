@@ -28,7 +28,7 @@ const INITIAL_MESSAGES: Message[] = [
     id: "init-1",
     role: "assistant",
     content:
-      "Hey there! 👋 I'm Sahil's AI assistant powered by Groq. Ask me anything about his skills, projects, experience, or availability!",
+      "Hey there! 👋 I'm Sahil's AI assistant. Ask me anything about his skills, projects, experience, or availability!",
   },
 ];
 
@@ -135,7 +135,7 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
           id: `assistant-err-${Date.now()}`,
           role: "assistant",
           content:
-            "Sorry, I had trouble reaching the AI service. Please make sure your `GROQ_API_KEY` is configured in `.env.local`, or email Sahil directly at sahilkrishnacb@gmail.com.",
+            "Sorry, I'm having trouble connecting right now. Feel free to email Sahil directly at sahilkrishnacb@gmail.com!",
         },
       ]);
     } finally {
@@ -194,9 +194,9 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
                   <div>
                     <div className="flex items-center gap-1.5">
                       <span className="text-xs sm:text-sm font-medium">Sahil&apos;s AI Bot</span>
-                      <span className="flex items-center gap-0.5 text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">
-                        <Sparkles size={8} />
-                        Groq
+                      <span className="flex items-center gap-1 text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        Online
                       </span>
                     </div>
                     <p className="text-[10px] text-[#84837E] dark:text-[#8E8D88]">
