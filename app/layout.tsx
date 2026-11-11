@@ -235,19 +235,19 @@ export default function RootLayout({
                 right-4
                 xs:right-6
                 sm:right-8
-                md:right-12
-                lg:right-16
-                xl:right-20
-                2xl:right-28
+                md:right-10
+                lg:right-14
+                xl:right-18
+                2xl:right-24
                 z-30
                 flex
-                scale-[0.58]
-                xs:scale-[0.62]
-                sm:scale-75
-                md:scale-85
-                lg:scale-100
-                xl:scale-110
-                2xl:scale-125
+                scale-[0.68]
+                xs:scale-[0.72]
+                sm:scale-[0.78]
+                md:scale-[0.82]
+                lg:scale-[0.85]
+                xl:scale-[0.90]
+                2xl:scale-95
                 origin-top-right
                 pointer-events-none
               "

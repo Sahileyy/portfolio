@@ -28,10 +28,10 @@ export function DraggableRope({
   minAngle = 8,
   initialAngle = 8,
   gravity = 18,
-  ropeHeight = 290,
+  ropeHeight = 240,
   ropeWidth = 2,
   ropeColor = "#8E8D88",
-  iconSize = 120,
+  iconSize = 92,
   icon,
   logoSrc
 }: DraggableRopeProps) {
@@ -236,6 +236,10 @@ export function DraggableRope({
     </svg>
   );
 
+  // Exact attachment point on the astronaut's backpack (in 64x64 SVG space: x ≈ 24.5, y ≈ 15.0)
+  const attachX = Math.round(iconSize * (24.5 / 64));
+  const attachY = Math.round(iconSize * (15.0 / 64));
+
   return (
     <div
       className={cn(
@@ -275,8 +279,8 @@ export function DraggableRope({
             height: iconSize,
             top: "100%",
             left: "50%",
-            marginLeft: -(iconSize / 2),
-            marginTop: -26,
+            marginLeft: -attachX,
+            marginTop: -attachY,
             transition: "transform 400ms ease",
             willChange: "transform",
             overflow: "visible",
