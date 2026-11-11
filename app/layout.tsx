@@ -230,20 +230,24 @@ export default function RootLayout({
             <DraggableRope
               className="
                 fixed
-                -top-3
+                -top-2
                 sm:top-0
-                right-1
-                sm:right-6
-                md:right-8
-                lg:right-12
-                xl:right-16
-                2xl:right-24
+                right-4
+                xs:right-6
+                sm:right-8
+                md:right-12
+                lg:right-16
+                xl:right-20
+                2xl:right-28
                 z-30
                 flex
                 scale-[0.58]
-                sm:scale-65
+                xs:scale-[0.62]
+                sm:scale-75
                 md:scale-85
                 lg:scale-100
+                xl:scale-110
+                2xl:scale-125
                 origin-top-right
                 pointer-events-none
               "

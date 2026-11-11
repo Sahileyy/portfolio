@@ -108,7 +108,21 @@ export function DraggableRope({
   }, [minAngle, initialAngle, gravity]);
 
   const Icon = (
-    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+    <svg
+      viewBox="0 0 64 64"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="#000000"
+      width="100%"
+      height="100%"
+      preserveAspectRatio="xMidYMid meet"
+      className="w-full h-full block"
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "block",
+        overflow: "visible",
+      }}
+    >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
@@ -232,35 +246,52 @@ export function DraggableRope({
       <div
         ref={ropeRef}
         data-cursor="pointer"
-        className="rope relative transform-gpu cursor-grab select-none pointer-events-auto"
+        className="rope relative cursor-grab select-none pointer-events-auto"
         style={{
           width: ropeWidth,
           height: ropeHeight,
           backgroundColor: ropeColor,
           boxShadow: "0 0 4px rgba(255, 255, 255, 0.2)",
           transformOrigin: "top center",
-          marginTop: "-2rem",
+          WebkitTransformOrigin: "top center",
+          marginTop: "-1rem",
           marginBottom: "50px",
           willChange: "transform",
-          transform: `rotate(${initialAngle}deg)`, // Set initial angle
+          transform: `rotate(${initialAngle}deg)`,
+          WebkitTransform: `rotate(${initialAngle}deg)`,
           touchAction: "none",
           WebkitTouchCallout: "none",
+          WebkitUserSelect: "none",
+          userSelect: "none",
+          overflow: "visible",
+          WebkitTransformStyle: "preserve-3d",
+          transformStyle: "preserve-3d",
         }}
       >
         <div
-          className="icon absolute flex items-center justify-center cursor-grab transform-gpu"
+          className="icon absolute flex items-center justify-center cursor-grab pointer-events-auto"
           style={{
             width: iconSize,
             height: iconSize,
             top: "100%",
             left: "50%",
-            transform: "translateX(-50%)",
+            marginLeft: -(iconSize / 2),
+            marginTop: -26,
             transition: "transform 400ms ease",
             willChange: "transform",
+            overflow: "visible",
+            touchAction: "none",
+            WebkitTouchCallout: "none",
+            WebkitUserSelect: "none",
+            userSelect: "none",
+            WebkitTransformStyle: "preserve-3d",
+            transformStyle: "preserve-3d",
+            WebkitBackfaceVisibility: "visible",
+            backfaceVisibility: "visible",
           }}
           onMouseEnter={(e) => {
             gsap.to(e.currentTarget, {
-              scale: 1.16,
+              scale: 1.15,
               duration: 0.4,
               ease: "power2.out",
             });
@@ -275,11 +306,13 @@ export function DraggableRope({
         >
           <div 
             style={{ 
-              width: iconSize, 
-              height: iconSize,
-              filter: "drop-shadow(0 6px 16px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.22))"
+              width: "100%", 
+              height: "100%",
+              filter: "drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65))",
+              WebkitFilter: "drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65))",
+              overflow: "visible",
             }}
-            className="-mt-10 flex items-center justify-center pointer-events-none transition-all duration-300"
+            className="flex items-center justify-center pointer-events-none transition-all duration-300"
           >
             {icon ? (
               icon
