@@ -179,52 +179,52 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
             aria-label="Chat with Sahil's AI assistant"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#F4F3EE]/90 dark:bg-[#1E1D1A]/90 border-b border-[#EAE8E2] dark:border-[#282725] backdrop-blur-xs shrink-0">
-              <div className="flex items-center gap-2.5">
-                <div className="relative w-8 h-8 rounded-full overflow-hidden bg-neutral-200/50 dark:bg-neutral-800/50 flex items-center justify-center shrink-0">
-                  <video
-                    src="/robot.webm"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs sm:text-sm font-medium">Sahil&apos;s AI Bot</span>
-                    <span className="flex items-center gap-0.5 text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">
-                      <Sparkles size={8} />
-                      Groq
-                    </span>
+              <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#F4F3EE]/90 dark:bg-[#1E1D1A]/90 border-b border-[#EAE8E2] dark:border-[#282725] backdrop-blur-xs shrink-0">
+                <div className="flex items-center gap-2.5">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden bg-neutral-200/50 dark:bg-neutral-800/50 flex items-center justify-center shrink-0">
+                    <video
+                      src="/robot.webm"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-contain"
+                    />
                   </div>
-                  <p className="text-[10px] text-[#84837E] dark:text-[#8E8D88]">
-                    Ask me anything about Sahil
-                  </p>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs sm:text-sm font-medium">Sahil&apos;s AI Bot</span>
+                      <span className="flex items-center gap-0.5 text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">
+                        <Sparkles size={8} />
+                        Groq
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-[#84837E] dark:text-[#8E8D88]">
+                      Ask me anything about Sahil
+                    </p>
+                  </div>
+                </div>
+
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={handleResetChat}
+                      title="Clear conversation"
+                      aria-label="Clear conversation"
+                      className="p-1.5 rounded-full text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 transition-colors cursor-pointer"
+                    >
+                      <RotateCcw size={13} />
+                    </button>
+                <button
+                      type="button"
+                      onClick={() => setIsOpen(false)}
+                      aria-label="Close assistant"
+                      className="p-1.5 rounded-full text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 transition-colors cursor-pointer"
+                    >
+                    <X size={15} />
+                  </button>
                 </div>
               </div>
-
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={handleResetChat}
-                  title="Clear conversation"
-                  aria-label="Clear conversation"
-                  className="p-1.5 rounded-full text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 transition-colors cursor-pointer"
-                >
-                  <RotateCcw size={13} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Close assistant"
-                  className="p-1.5 rounded-full text-[#84837E] dark:text-[#8E8D88] hover:text-[#141413] dark:hover:text-[#EDEDEB] hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 transition-colors cursor-pointer"
-                >
-                  <X size={15} />
-                </button>
-              </div>
-            </div>
 
             {/* Conversation Messages Area */}
             <div className="flex-1 p-3.5 space-y-3 overflow-y-auto text-xs">
@@ -252,16 +252,16 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
                       </span>
                     )}
                   </div>
-                );
+              );
               })}
 
-              {/* Typing / Loading indicator */}
-              {isLoading && (
-                <div className="flex items-center gap-1.5 p-2.5 rounded-2xl rounded-tl-xs bg-[#F4F3EE] dark:bg-[#22211E] text-[#84837E] dark:text-[#8E8D88] w-fit">
-                  <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]"></span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]"></span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce"></span>
-                </div>
+                {/* Typing / Loading indicator */}
+                {isLoading && (
+                  <div className="flex items-center gap-1.5 p-2.5 rounded-2xl rounded-tl-xs bg-[#F4F3EE] dark:bg-[#22211E] text-[#84837E] dark:text-[#8E8D88] w-fit">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce"></span>
+                  </div>
               )}
 
               {/* Suggested Questions Pills (shown if fewer than 3 messages) */}

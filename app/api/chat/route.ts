@@ -96,17 +96,40 @@ export async function POST(req: NextRequest) {
       })),
     ];
 
-    const chatCompletion = await groq.chat.completions.create({
-      messages: formattedMessages,
-      model: "llama-3.3-70b-versatile",
-      temperature: 0.6,
-      max_tokens: 600,
-      top_p: 0.9,
-    });
+    const MODELS_TO_TRY = [
+      "qwen/qwen3.8-27b",
+      "llama-3.3-70b-versatile",
+      "llama-3.1-8b-instant",
+    ];
 
-    const reply =
-      chatCompletion.choices[0]?.message?.content ||
-      "I'm here to help! Could you please repeat or rephrase your question?";
+    let reply = "";
+    let lastError: Error | null = null;
+
+    for (const model of MODELS_TO_TRY) {
+      try {
+        const chatCompletion = await groq.chat.completions.create({
+          messages: formattedMessages,
+          model,
+          temperature: 0.6,
+          max_tokens: 600,
+          top_p: 0.9,
+        });
+
+        const content = chatCompletion.choices[0]?.message?.content?.trim();
+        if (content) {
+          reply = content;
+          break;
+        }
+      } catch (err) {
+        lastError = err instanceof Error ? err : new Error(String(err));
+        console.warn(`Model ${model} failed, trying next...`, err);
+      }
+    }
+
+    if (!reply) {
+      if (lastError) throw lastError;
+      reply = "I'm here to help! Could you please repeat or rephrase your question?";
+    }
 
     return NextResponse.json({ message: reply });
   } catch (error: unknown) {
@@ -125,3 +148,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
