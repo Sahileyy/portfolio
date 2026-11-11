@@ -49,7 +49,48 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const lenis = useLenis();
+
+  // Close chat when clicking outside or pressing Escape
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+
+      // Click is inside chat popover window -> keep open
+      if (chatBoxRef.current && chatBoxRef.current.contains(target)) {
+        return;
+      }
+
+      // Click is on the toggle robot button -> let handleToggle handle it
+      if (toggleButtonRef.current && toggleButtonRef.current.contains(target)) {
+        return;
+      }
+
+      // Clicked outside -> close chat
+      setIsOpen(false);
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   // Show floating greeting bubble after 1.8 seconds on initial load
   useEffect(() => {
@@ -169,11 +210,15 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={chatBoxRef}
+            data-lenis-prevent
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
             initial={{ opacity: 0, scale: 0.9, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 15 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-3 w-[calc(100vw-2rem)] sm:w-88 max-w-[370px] h-[520px] max-h-[80vh] flex flex-col bg-[#FAFAF8] dark:bg-[#161615] border border-[#EAE8E2] dark:border-[#282725] rounded-2xl shadow-2xl overflow-hidden text-[#141413] dark:text-[#EDEDEB]"
+            className="mb-3 w-[calc(100vw-2rem)] sm:w-88 max-w-[370px] h-[520px] max-h-[80vh] flex flex-col bg-[#FAFAF8] dark:bg-[#161615] border border-[#EAE8E2] dark:border-[#282725] rounded-2xl shadow-2xl overflow-hidden overscroll-contain text-[#141413] dark:text-[#EDEDEB]"
             role="dialog"
             aria-modal="true"
             aria-label="Chat with Sahil's AI assistant"
@@ -227,7 +272,10 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
               </div>
 
             {/* Conversation Messages Area */}
-            <div className="flex-1 p-3.5 space-y-3 overflow-y-auto text-xs">
+            <div
+              data-lenis-prevent
+              className="flex-1 p-3.5 space-y-3 overflow-y-auto overscroll-contain text-xs"
+            >
               {messages.map((message) => {
                 const isAssistant = message.role === "assistant";
                 return (
@@ -380,6 +428,7 @@ export default function FloatingChatbot({ onOpenCv }: FloatingChatbotProps) {
 
       {/* Floating Robot Video Button */}
       <motion.button
+        ref={toggleButtonRef}
         type="button"
         onClick={handleToggle}
         aria-label="Open AI assistant"
