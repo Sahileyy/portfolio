@@ -88,148 +88,148 @@ export default function Home() {
       const timer = setTimeout(() => {
         setActiveSection(targetSection);
         scrollToSection(targetSection);
-      }, 50);
-      return () => clearTimeout(timer);
+    }, 50);
+  return () => clearTimeout(timer);
+}
+  }, [scrollToSection]);
+
+// Handle browser back/forward buttons and hashchange
+useEffect(() => {
+  const handlePopState = () => {
+    const hash = window.location.hash.replace(/^#/, "").toLowerCase();
+    const pathname = window.location.pathname.replace(/^\//, "").toLowerCase();
+    const targetId = hash || (pathname && pathname !== "home" ? pathname : "home");
+    setActiveSection(targetId);
+    scrollToSection(targetId);
+  };
+
+  const handleHashChange = () => {
+    const hash = window.location.hash.replace(/^#/, "").toLowerCase();
+    const targetId = hash || "home";
+    setActiveSection(targetId);
+    scrollToSection(targetId);
+  };
+
+  window.addEventListener("popstate", handlePopState);
+  window.addEventListener("hashchange", handleHashChange);
+  return () => {
+    window.removeEventListener("popstate", handlePopState);
+    window.removeEventListener("hashchange", handleHashChange);
+  };
+}, [scrollToSection]);
+
+// Scroll observer to update active section indicator without modifying URL on scroll
+useEffect(() => {
+  const navSections = ["home", "work", "services", "experience", "skills", "contact"];
+  let rafId: number | null = null;
+  let isTicking = false;
+
+  const updateActiveSection = () => {
+    if (isNavigatingRef.current) {
+      isTicking = false;
+      return;
     }
-  }, [scrollToSection]);
 
-  // Handle browser back/forward buttons and hashchange
-  useEffect(() => {
-    const handlePopState = () => {
-      const hash = window.location.hash.replace(/^#/, "").toLowerCase();
-      const pathname = window.location.pathname.replace(/^\//, "").toLowerCase();
-      const targetId = hash || (pathname && pathname !== "home" ? pathname : "home");
-      setActiveSection(targetId);
-      scrollToSection(targetId);
-    };
+    const scrollY = window.scrollY;
 
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace(/^#/, "").toLowerCase();
-      const targetId = hash || "home";
-      setActiveSection(targetId);
-      scrollToSection(targetId);
-    };
+    // Bottom of page detection
+    if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 60) {
+      setActiveSection("contact");
+      isTicking = false;
+      return;
+    }
 
-    window.addEventListener("popstate", handlePopState);
-    window.addEventListener("hashchange", handleHashChange);
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-      window.removeEventListener("hashchange", handleHashChange);
-    };
-  }, [scrollToSection]);
+    // Top of page detection
+    if (scrollY < 120) {
+      setActiveSection("home");
+      isTicking = false;
+      return;
+    }
 
-  // Scroll observer to update active section indicator without modifying URL on scroll
-  useEffect(() => {
-    const navSections = ["home", "work", "services", "experience", "skills", "contact"];
-    let rafId: number | null = null;
-    let isTicking = false;
-
-    const updateActiveSection = () => {
-      if (isNavigatingRef.current) {
-        isTicking = false;
-        return;
-      }
-
-      const scrollY = window.scrollY;
-
-      // Bottom of page detection
-      if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 60) {
-        setActiveSection("contact");
-        isTicking = false;
-        return;
-      }
-
-      // Top of page detection
-      if (scrollY < 120) {
-        setActiveSection("home");
-        isTicking = false;
-        return;
-      }
-
-      for (const sectionId of navSections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 250 && rect.bottom > 100) {
-            setActiveSection(sectionId);
-            break;
-          }
+    for (const sectionId of navSections) {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 250 && rect.bottom > 100) {
+          setActiveSection(sectionId);
+          break;
         }
       }
-      isTicking = false;
-    };
+    }
+    isTicking = false;
+  };
 
-    const handleScroll = () => {
-      if (!isTicking) {
-        isTicking = true;
-        rafId = requestAnimationFrame(updateActiveSection);
-      }
-    };
+  const handleScroll = () => {
+    if (!isTicking) {
+      isTicking = true;
+      rafId = requestAnimationFrame(updateActiveSection);
+    }
+  };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    updateActiveSection();
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  updateActiveSection();
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-      if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
-    };
-  }, []);
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+    if (rafId) cancelAnimationFrame(rafId);
+    if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
+  };
+}, []);
 
-  return (
-    <div className="relative min-h-screen bg-[#FAFAF8] dark:bg-[#121211] text-[#141413] dark:text-[#EDEDEB] antialiased selection:bg-[#141413] selection:text-[#FAFAF8] dark:selection:bg-[#EDEDEB] dark:selection:text-[#121211] transition-colors duration-200">
-      <FlickeringCatBackground />
-      <div className="relative z-10 isolate mx-auto min-h-screen max-w-[712px] px-4 sm:px-6 md:px-8 pb-20 sm:pb-24 pt-3 sm:pt-8 md:pt-10">
-        {/* Ephraim Duncan-styled Navbar with slow initial entrance */}
-        <ScrollReveal duration={1.0} delay={0.05} yOffset={10}>
-          <Navbar
-            activeSection={activeSection}
-            onNavigate={handleNavigate}
-          />
+return (
+  <div className="relative min-h-screen bg-[#FAFAF8] dark:bg-[#121211] text-[#141413] dark:text-[#EDEDEB] antialiased selection:bg-[#141413] selection:text-[#FAFAF8] dark:selection:bg-[#EDEDEB] dark:selection:text-[#121211] transition-colors duration-200">
+    <FlickeringCatBackground />
+    <div className="relative z-10 isolate mx-auto min-h-screen max-w-[712px] px-4 sm:px-6 md:px-8 pb-20 sm:pb-24 pt-3 sm:pt-8 md:pt-10">
+      {/* Ephraim Duncan-styled Navbar with slow initial entrance */}
+      <ScrollReveal duration={1.0} delay={0.05} yOffset={10}>
+        <Navbar
+          activeSection={activeSection}
+          onNavigate={handleNavigate}
+        />
+      </ScrollReveal>
+
+      {/* Main Content Area with Bidirectional Scroll Reveal and Slow Initial Hero Fade */}
+      <main className="space-y-10 sm:space-y-14 md:space-y-16">
+        <ScrollReveal slowInitial={true} duration={1.2} delay={0.12} yOffset={22}>
+          <HeroSection onOpenCv={() => setIsCvOpen(true)} />
         </ScrollReveal>
 
-        {/* Main Content Area with Bidirectional Scroll Reveal and Slow Initial Hero Fade */}
-        <main className="space-y-10 sm:space-y-14 md:space-y-16">
-          <ScrollReveal slowInitial={true} duration={1.2} delay={0.12} yOffset={22}>
-            <HeroSection onOpenCv={() => setIsCvOpen(true)} />
-          </ScrollReveal>
-
-          <ScrollReveal duration={0.9} delay={0.05} yOffset={22}>
-            <ProjectsSection />
-          </ScrollReveal>
-
-          <ScrollReveal duration={0.9} yOffset={22}>
-            <ServicesSection />
-          </ScrollReveal>
-
-          <ScrollReveal duration={0.9} yOffset={22}>
-            <ExperienceSection />
-          </ScrollReveal>
-
-          <ScrollReveal duration={0.9} yOffset={22}>
-            <SkillsSection />
-          </ScrollReveal>
-
-          <ScrollReveal duration={0.9} yOffset={22}>
-            <HobbiesSection />
-          </ScrollReveal>
-
-          <ScrollReveal duration={0.9} yOffset={22}>
-            <FAQSection />
-          </ScrollReveal>
-
-          <ScrollReveal duration={0.9} yOffset={22}>
-            <ContactSection onOpenCv={() => setIsCvOpen(true)} />
-          </ScrollReveal>
-        </main>
-
-        <ScrollReveal duration={0.8} yOffset={15} delay={0.05}>
-          <Footer />
+        <ScrollReveal duration={0.9} delay={0.05} yOffset={22}>
+          <ProjectsSection />
         </ScrollReveal>
 
-        {/* CV / Resume Viewer & Download Modal */}
-        <CVModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
-      </div>
+        <ScrollReveal duration={0.9} yOffset={22}>
+          <ServicesSection />
+        </ScrollReveal>
+
+        <ScrollReveal duration={0.9} yOffset={22}>
+          <ExperienceSection />
+        </ScrollReveal>
+
+        <ScrollReveal duration={0.9} yOffset={22}>
+          <SkillsSection />
+        </ScrollReveal>
+
+        <ScrollReveal duration={0.9} yOffset={22}>
+          <HobbiesSection />
+        </ScrollReveal>
+
+        <ScrollReveal duration={0.9} yOffset={22}>
+          <FAQSection />
+        </ScrollReveal>
+
+        <ScrollReveal duration={0.9} yOffset={22}>
+          <ContactSection onOpenCv={() => setIsCvOpen(true)} />
+        </ScrollReveal>
+      </main>
+
+      <ScrollReveal duration={0.8} yOffset={15} delay={0.05}>
+        <Footer />
+      </ScrollReveal>
+
+      {/* CV / Resume Viewer & Download Modal */}
+      <CVModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
     </div>
-  );
+  </div>
+);
 }

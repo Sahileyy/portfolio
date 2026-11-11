@@ -160,28 +160,30 @@ function subscribeTheme(callback: () => void) {
               );
             })}
 
-            <button
-              type="button"
-              onClick={() => setIsExpanded(!isExpanded)}
-              aria-expanded={isExpanded}
-              aria-label={isExpanded ? "Collapse navigation links" : "View more navigation links"}
-              className={`relative flex items - center gap - 0.5 px - 1.5 py - 1 text - sm transition - colors rounded cursor - pointer ${isSecondaryActive
-                  ? "text-[#141413] dark:text-[#EDEDEB] font-medium"
-                  : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
-                }`}
+          <button
+            type="button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            aria-expanded={isExpanded}
+            aria-label={isExpanded ? "Collapse navigation links" : "View more navigation links"}
+            className={`relative inline-flex items-center gap-0.5 px-1.5 py-1 text-sm transition-colors rounded cursor-pointer ${
+              isSecondaryActive
+                ? "text-[#141413] dark:text-[#EDEDEB] font-medium"
+                : "text-[#5E5D59] dark:text-[#A3A29D] hover:text-[#141413] dark:hover:text-[#EDEDEB]"
+            }`}
+          >
+            <span>{isExpanded ? "less" : "more"}</span>
+            <span
+              className={`inline-flex items-center justify-center transition-transform duration-200 ${
+                isExpanded ? "rotate-180" : ""
+              }`}
             >
-              <span>{isExpanded ? "less" : "more"}</span>
-              <span
-                className={`inline - flex transition - transform duration - 200 ${isExpanded ? "rotate-180" : ""
-                  }`}
-              >
-                <SketchChevron size={13} />
-              </span>
-              {isSecondaryActive && !isExpanded && (
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 ml-0.5" />
-              )}
-            </button>
-          </div>
+              <SketchChevron size={13} />
+            </span>
+            {isSecondaryActive && !isExpanded && (
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 ml-0.5" />
+            )}
+          </button>
+        </div>
 
             {/* Theme Toggle Button */}
               <button
